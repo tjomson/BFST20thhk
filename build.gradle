@@ -26,7 +26,7 @@ dependencies {
 }
 
 application {
-    mainClassName = 'bfst20.addressparser.GUGUI'
+    mainClassName = 'bfst20.addressparser.GUI'
 }
 
 test {
