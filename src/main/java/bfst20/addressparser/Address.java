@@ -72,14 +72,4 @@ public class Address {
       return new Address(street, house, floor, side, postcode, city);
     }
   }
-
-  public static void main(String[] args) {
-    try (var input = new Scanner(System.in)) {
-      while (input.hasNextLine()) {
-        var raw = input.nextLine();
-        var parsed = parse(raw);
-        System.out.println(parsed);
-      }
-    }
-  }
 }
