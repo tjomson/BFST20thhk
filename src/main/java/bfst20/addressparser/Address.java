@@ -1,3 +1,5 @@
+package bfst20.addressparser;
+
 import java.util.Scanner;
 import java.util.regex.*;
 
