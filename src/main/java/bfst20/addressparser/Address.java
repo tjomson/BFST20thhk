@@ -2,11 +2,16 @@ package bfst20.addressparser;
 
 import java.util.regex.*;
 
+import java.util.regex.Pattern;
+
 public class Address {
+
+  private static Model model;
+
   public final String street, house, floor, side, postcode, city;
 
   private Address(
-      String _street, String _house, String _floor, String _side, String _postcode, String _city) {
+          String _street, String _house, String _floor, String _side, String _postcode, String _city) {
     street = _street;
     house = _house;
     floor = _floor;
@@ -19,16 +24,21 @@ public class Address {
     return street + " " + house + ", " + floor + " " + side + "\n" + postcode + " " + city;
   }
 
-  static String regex = "^ *(?<street>[a-zA-Z ]*?) +(?<house>[0-9]+)$";
+  //Regular expression lavet med Lene Borup Randlov.
+  static String regex = "^[ ,\\._-]*(?<street>[0-9a-zA-ZæøåÆØÅ \\.,-]+?)[ ,\\._-]+(?<house>[0-9a-zA-ZæøåÆØÅ]*)(([ ,\\._-]+(?<floor>[0-9]{1,3})[ ,\\._-]+(?<side>[0-9]+))|())[ ,\\._-]*((?<postcode>[0-9]{4})|())(([ ,\\._-]*(?<city>[a-zA-ZæøåÆØÅ .,-]+?))|())[ ,\\._-]*$";
   static Pattern pattern = Pattern.compile(regex);
 
   public static Address parse(String input) {
     var matcher = pattern.matcher(input);
     if (matcher.matches()) {
       return new Builder()
-        .street(matcher.group("street"))
-        .house(matcher.group("house"))
-        .build();
+              .street(matcher.group("street"))
+              .house(matcher.group("house"))
+              .floor(matcher.group("floor"))
+              .side(matcher.group("side"))
+              .postcode(matcher.group("postcode"))
+              .city(matcher.group("city"))
+              .build();
     } else {
       throw new IllegalArgumentException("Cannot parse: " + input);
     }
